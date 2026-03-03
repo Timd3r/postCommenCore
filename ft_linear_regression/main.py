@@ -1,5 +1,7 @@
 import json
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def run_full_analysis():
     # 1. Load the data to test against
@@ -52,3 +54,41 @@ def run_full_analysis():
 
 if __name__ == "__main__":
     run_full_analysis()
+        
+
+    df = pd.read_csv('data.csv')
+
+    # Load the trained thetas
+    try:
+        with open("thetas.json", "r") as f:
+            res = json.load(f)
+            t0, t1 = res["t0"], res["t1"]
+            #min_m, max_m = res["min"], res["max"]
+        
+        # Create data points for the regression line
+        km_range = np.linspace(df['km'].min(), df['km'].max(), 100)
+        
+        # Normalize the km values using the same scaling as training
+        #norm_km_range = (km_range - min_m) / (max_m - min_m)
+        
+        # Calculate predicted prices using the trained model
+        predicted_prices = t0 + (t1 * km_range)
+        
+        # Create the plot
+        plt.scatter(df['km'], df['price'], color='blue', label='Data points')
+        plt.plot(km_range, predicted_prices, color='red', linewidth=2, label='Linear regression')
+        
+        plt.xlabel('km')
+        plt.ylabel('price')
+        plt.title('Scatter Plot of km vs price with Linear Regression Line')
+        plt.legend()
+        plt.show()
+        
+    except FileNotFoundError:
+        print("thetas.json not found. Run train.py first to generate the model.")
+        # Show scatter plot without regression line
+        plt.scatter(df['km'], df['price'])
+        plt.xlabel('km')
+        plt.ylabel('price')
+        plt.title('Scatter Plot of km vs price')
+        plt.show()
