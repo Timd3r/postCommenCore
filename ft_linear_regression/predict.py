@@ -6,11 +6,10 @@ def predict_price():
         with open("thetas.json", "r") as f:
             res = json.load(f)
             t0, t1 = res["t0"], res["t1"]
-            min_m, max_m = res["min"], res["max"]
     except FileNotFoundError:
         # If training hasn't run, thetas must be 0
         t0, t1 = 0.0, 0.0
-        min_m, max_m = 0, 1
+        #min_m, max_m = 0, 1
 
     # Prompt user for mileage
     try:
@@ -21,11 +20,14 @@ def predict_price():
         return
 
     # Scale the input mileage exactly like the training data
-    norm_mileage = (mileage - min_m) / (max_m - min_m) if max_m != min_m else 0
+#    norm_mileage = (mileage - min_m) / (max_m - min_m) if max_m != min_m else 0
 
     # Apply the hypothesis formula
     # estimatePrice(mileage) = theta0 + (theta1 * mileage)
-    estimate = t0 + (t1 * norm_mileage)
+    print(t0)
+    print(t1)
+    print(mileage)
+    estimate = t0 + (t1 * mileage)
     
     print(f"Estimated price: {estimate}")
 
