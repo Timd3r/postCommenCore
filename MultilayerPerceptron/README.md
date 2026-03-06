@@ -1,4 +1,4 @@
-Multilayer Perceptron - Breast Cancer Detection
+**Multilayer Perceptron - Breast Cancer Detection**
 
 A from-scratch implementation of a Neural Network to classify breast cancer tumors as Malignant or Benign based on 30 cellular measurements.
 📋 Features
