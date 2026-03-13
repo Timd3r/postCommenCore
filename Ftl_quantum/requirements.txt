@@ -1,0 +1,7 @@
+qiskit>=1.0.0
+qiskit-aer
+matplotlib
+pylatexenc
+ipykernel
+qiskit-ibm-runtime>=0.23.0
+python-dotenv
